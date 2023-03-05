@@ -122,6 +122,9 @@ void AP_PlayerController::HitByTarget()
 	if (Lives <= 0)
 	{
 		// TODO GAME OVER
+		SetActorHiddenInGame(true);
+		SetActorEnableCollision(false);
+		
 	}
 }
 

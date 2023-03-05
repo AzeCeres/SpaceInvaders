@@ -10,13 +10,6 @@ AE_Enemy::AE_Enemy()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-}
-
-// Called when the game starts or when spawned
-void AE_Enemy::BeginPlay()
-{
-	Super::BeginPlay();
 	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	SetRootComponent(Collider);
 	Collider->InitBoxExtent(FVector(10, 50, 50));
@@ -28,8 +21,15 @@ void AE_Enemy::BeginPlay()
 	StaticMesh->SetRelativeLocation(FVector(0.f, 0.f, -50));
 
 	MovementSpeed = 350;
-	RotationSpeed = 1.f;
-	XKillPosition = -200.f;
+	
+	XKillPosition = -10.f;
+}
+
+// Called when the game starts or when spawned
+void AE_Enemy::BeginPlay()
+{
+	Super::BeginPlay();
+	
 }
 
 // Called every frame
@@ -39,6 +39,44 @@ void AE_Enemy::Tick(float DeltaTime)
 	if (GetActorLocation().X < XKillPosition)
 	{
 		DestroyTarget();
+	}
+	FVector NewLocation = GetActorLocation();
+	if(goForward)
+	{
+		NewLocation += -GetActorForwardVector() * MovementSpeed * DeltaTime;
+		forwardMoved += MovementSpeed*DeltaTime;
+		if(forwardMoved >= ForwardDistance)
+		{
+			goForward = false;
+			
+		}
+	}
+	else if (enemyDirection == Left)
+	{
+		//left
+		NewLocation += -GetActorRightVector() * MovementSpeed * DeltaTime;
+	}
+	else if (enemyDirection == Right)
+	{
+		NewLocation += GetActorRightVector() * MovementSpeed * DeltaTime;
+	}
+	SetActorLocation(NewLocation);
+	if(GetActorLocation().Y > 440 || GetActorLocation().Y< -440)
+	{
+		goForward = true;
+		forwardMoved=0;
+		if(GetActorLocation().Y >= 440)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("is outside boundaries +"));
+			SetActorLocation(FVector(GetActorLocation().X, 435, GetActorLocation().Z));
+			enemyDirection = Left;
+		}
+		else if (GetActorLocation().Y <= -440)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("is outside boundaries -"));
+			SetActorLocation(FVector(GetActorLocation().X, -435, GetActorLocation().Z));
+			enemyDirection = Right;
+		}
 	}
 }
 

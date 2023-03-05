@@ -31,8 +31,15 @@ public:
 	UBoxComponent* Collider {nullptr};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMeshComponent* StaticMesh;
+	class UStaticMeshComponent* StaticMesh;
 
+	enum Direction
+	{
+		Left,
+		Right
+	};
+	Direction enemyDirection = Left;
+	bool goForward = false;
 	/** Public Functions */
 
 	UFUNCTION()
@@ -48,10 +55,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 	float MovementSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	float ForwardDistance = 100;
+	float forwardMoved = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-	float RotationSpeed;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-	float XKillPosition;
+	float XKillPosition = -10;
 };
