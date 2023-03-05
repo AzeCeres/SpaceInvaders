@@ -6,7 +6,6 @@
 #include "GameFramework/Pawn.h"
 #include "P_PlayerController.generated.h"
 
-class USpringArmComponent;
 class UCameraComponent;
 class AP_Bullet;
 struct FInputActionValue;
@@ -37,9 +36,6 @@ public:
 	UStaticMeshComponent* StaticMesh;
 
 	UPROPERTY(VisibleAnywhere)
-	USpringArmComponent* SpringArm;
-
-	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* Camera;
 
 
@@ -60,7 +56,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 	int Lives;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	float shootBufferTime = 1;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	float timeBeforeCanShoot;
 
 	/** Public Function */
 	void HitByTarget();
@@ -68,8 +67,7 @@ public:
 	/** Private Variables */
 	private:
 	bool canShoot;
-	float shootBufferTime;
-	float timeBeforeCanShoot;
+	
 	//float XInput;
 	float horzInputValue;
 	float Yaw;
@@ -79,14 +77,9 @@ public:
 private:
 	/** Private Functions */
 
-	//void Forward(const FInputActionValue& input);
 	void Horizontal(const FInputActionValue& input);
 
 	void Shoot(const FInputActionValue& input);
-	//void Reload(const FInputActionValue& input);
-
-	//void MouseX(const FInputActionValue& input);
-	//void MouseY(const FInputActionValue& input);
 
 public:
 	//Input
@@ -94,21 +87,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
 	class UInputMappingContext* MappingContext;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
-	//class UInputAction* ForwardInput;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
 	class UInputAction* HorzInputAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
 	class UInputAction* ShootInputAction;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
-	//class UInputAction* ReloadInput;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
-	//class UInputAction* MouseXInput;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
-	//class UInputAction* MouseYInput;
 };
