@@ -2,7 +2,6 @@
 
 
 #include "P_PlayerController.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "P_Bullet.h"
 
@@ -20,19 +19,10 @@ AP_PlayerController::AP_PlayerController()
 	StaticMesh->SetRelativeLocation(FVector(0, 0, 0));
 	StaticMesh->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
 
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	SpringArm->SetupAttachment(GetRootComponent());
-	SpringArm->TargetArmLength = 400.f;
-	SpringArm->SetRelativeRotation(FRotator(-15.f, 0.f, 0.f));
-	SpringArm->bEnableCameraLag = true;
-	SpringArm->CameraLagSpeed = 15.f;
-	SpringArm->bUsePawnControlRotation = true;
-
 	// Stand still when we dont move
 	bUseControllerRotationYaw = false;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
-	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 	
 	MovementSpeed = 1000;
 	Lives = 5;
@@ -74,7 +64,16 @@ void AP_PlayerController::Tick(float DeltaTime)
 	// Gets the local forward vector - normalized
 	FVector Direction = FRotationMatrix(Rotation).GetUnitAxis(EAxis::Y);
 	SetActorLocation(GetActorLocation() + (Direction * horzInputValue * MovementSpeed * DeltaTime));
-
+	if(GetActorLocation().Y >= 440)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("is outside boundaries +"));
+		SetActorLocation(FVector(GetActorLocation().X, 440, GetActorLocation().Z));
+	}
+	else if (GetActorLocation().Y <= -440)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("is outside boundaries -"));
+		SetActorLocation(FVector(GetActorLocation().X, -440, GetActorLocation().Z));
+	}
 	SetActorRotation(Rotation);
 }
 
@@ -101,7 +100,9 @@ void AP_PlayerController::Horizontal(const FInputActionValue& input)
 
 void AP_PlayerController::Shoot(const FInputActionValue& input)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("Shoot, before tests"));
 	if (!canShoot || Controller == nullptr) return;
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("Shoot, after tests"));
 	timeBeforeCanShoot = shootBufferTime;
 	canShoot=false;
 	
