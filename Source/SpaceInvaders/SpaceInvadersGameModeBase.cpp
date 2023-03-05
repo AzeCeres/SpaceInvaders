@@ -3,7 +3,6 @@
 
 #include "SpaceInvadersGameModeBase.h"
 #include "E_Enemy.h"
-
 ASpaceInvadersGameModeBase::ASpaceInvadersGameModeBase()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -60,15 +59,8 @@ void ASpaceInvadersGameModeBase::Tick(float DeltaTime)
 				AE_Enemy* Target = Cast<AE_Enemy>(Actor);
 			}
 		}
-
-		FVector Location =
-
-		// Spawning
-		AActor* Actor = GetWorld()->SpawnActor<AActor>(E_Enemy_BP, Location, FRotator::ZeroRotator);
-		AE_Enemy* Target = Cast<AE_Enemy>(Actor);
-
 		// Changing Target Values
-		Target->MovementSpeed *= WaveDifficulty[CurrentWave - 1];
+		//Target->MovementSpeed *= WaveDifficulty[CurrentWave - 1];
 		LeftToSpawn--;
 		if (LeftToSpawn <= 0)
 		{
