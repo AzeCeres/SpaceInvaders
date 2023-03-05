@@ -46,7 +46,22 @@ void ASpaceInvadersGameModeBase::Tick(float DeltaTime)
 	if (Clock > WaveSpawnFrequency[CurrentWave - 1] && !GameWon)
 	{
 		Clock = 0.f;
-		FVector Location = FVector(FMath::RandRange(MinX, MaxX), FMath::RandRange(MinY, MaxY), 80);
+		//FVector Location = FVector(FMath::RandRange(MinX, MaxX), FMath::RandRange(MinY, MaxY), 80);
+
+		for (int row = 0; row < WaveSize[CurrentWave] / 5; row++) {
+			int xpos = MinX + 100 * row;
+			for (int collumn = 0; collumn < 5; collumn++) {
+				int ypos = (100 * collumn) -300;
+
+				FVector Location = FVector(xpos, ypos, 80);
+
+				// Spawning
+				AActor* Actor = GetWorld()->SpawnActor<AActor>(E_Enemy_BP, Location, FRotator::ZeroRotator);
+				AE_Enemy* Target = Cast<AE_Enemy>(Actor);
+			}
+		}
+
+		FVector Location =
 
 		// Spawning
 		AActor* Actor = GetWorld()->SpawnActor<AActor>(E_Enemy_BP, Location, FRotator::ZeroRotator);
