@@ -6,6 +6,11 @@
 #include "GameFramework/Pawn.h"
 #include "P_PlayerController.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
+class AP_Bullet;
+struct FInputActionValue;
+
 UCLASS()
 class SPACEINVADERS_API AP_PlayerController : public APawn
 {
@@ -26,4 +31,84 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	/** Components */
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UStaticMeshComponent* StaticMesh;
+
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* SpringArm;
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* Camera;
+
+
+	/** Blueprints: we set these in our blueprint */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	TSubclassOf<AP_Bullet> Bullet_BP;
+
+	/** Public Variables */
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	//int Ammo;
+	
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	//int MaxAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	float MovementSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	int Lives;
+
+
+	/** Public Function */
+	void HitByTarget();
+
+	/** Private Variables */
+	private:
+	bool canShoot;
+	float shootBufferTime;
+	float timeBeforeCanShoot;
+	//float XInput;
+	float horzInputValue;
+	float Yaw;
+	float Pitch;
+
+
+private:
+	/** Private Functions */
+
+	//void Forward(const FInputActionValue& input);
+	void Horizontal(const FInputActionValue& input);
+
+	void Shoot(const FInputActionValue& input);
+	//void Reload(const FInputActionValue& input);
+
+	//void MouseX(const FInputActionValue& input);
+	//void MouseY(const FInputActionValue& input);
+
+public:
+	//Input
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
+	class UInputMappingContext* MappingContext;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
+	//class UInputAction* ForwardInput;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
+	class UInputAction* HorzInputAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
+	class UInputAction* ShootInputAction;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
+	//class UInputAction* ReloadInput;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
+	//class UInputAction* MouseXInput;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
+	//class UInputAction* MouseYInput;
 };
