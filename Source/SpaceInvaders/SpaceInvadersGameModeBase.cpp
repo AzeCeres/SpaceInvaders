@@ -20,8 +20,8 @@ ASpaceInvadersGameModeBase::ASpaceInvadersGameModeBase()
 	WaveSpawnFrequency.Add(1);
 	WaveSpawnFrequency.Add(0.5f);
 
-	MinX = 2000;
-	MaxX = 2200;
+	MinX = 1800;
+	Margins = 150;
 
 	MinY = -400;
 	MaxY = 400;
@@ -33,51 +33,65 @@ void ASpaceInvadersGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurrentWave = 1;
-	LeftToSpawn = WaveSize[CurrentWave - 1];
+	CurrentWave = 0;
+	LeftToSpawn = WaveSize[CurrentWave];
+
+	SpawnWave(CurrentWave);
+}
+
+void ASpaceInvadersGameModeBase::SpawnWave(int wave)
+{
+	for (int row = 0; row < WaveSize[CurrentWave] / 5; row++) {
+		int xpos = MinX + 100 * row;
+		for (int collumn = 0; collumn < 5; collumn++) {
+			int ypos = (Margins * collumn) - 300;
+
+			FVector Location = FVector(xpos, ypos, 80);
+
+			// Spawning
+			AActor* Actor = GetWorld()->SpawnActor<AActor>(BPE_Enemy, Location, FRotator::ZeroRotator);
+			AE_Enemy* Target = Cast<AE_Enemy>(Actor);
+		}
+	}
 }
 
 void ASpaceInvadersGameModeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Clock += DeltaTime;
-	if (Clock > WaveSpawnFrequency[CurrentWave - 1] && !GameWon)
+	//FVector Location = FVector(FMath::RandRange(MinX, MaxX), FMath::RandRange(MinY, MaxY), 80);
+
+	// Changing Target Values
+	//Target->MovementSpeed *= WaveDifficulty[CurrentWave - 1];
+	/*LeftToSpawn--;
+	if (LeftToSpawn <= 0)
 	{
-		Clock = 0.f;
-		//FVector Location = FVector(FMath::RandRange(MinX, MaxX), FMath::RandRange(MinY, MaxY), 80);
-
-		for (int row = 0; row < WaveSize[CurrentWave] / 5; row++) {
-			int xpos = MinX + 100 * row;
-			for (int collumn = 0; collumn < 5; collumn++) {
-				int ypos = (100 * collumn) -300;
-
-				FVector Location = FVector(xpos, ypos, 80);
-
-				// Spawning
-				AActor* Actor = GetWorld()->SpawnActor<AActor>(E_Enemy_BP, Location, FRotator::ZeroRotator);
-				AE_Enemy* Target = Cast<AE_Enemy>(Actor);
-			}
-		}
-		// Changing Target Values
-		//Target->MovementSpeed *= WaveDifficulty[CurrentWave - 1];
-		LeftToSpawn--;
-		if (LeftToSpawn <= 0)
-		{
-			ChangeWave(CurrentWave + 1);
-		}
-	}
+		ChangeWave(CurrentWave + 1);
+	}*/
 
 }
+
+void ASpaceInvadersGameModeBase::IncreaseKillCount()
+{
+	EnemiesKilled++;
+	if (EnemiesKilled > WaveSize[CurrentWave])
+	{
+		ChangeWave(CurrentWave + 1);
+		EnemiesKilled = 0;
+	}
+}
+
 void ASpaceInvadersGameModeBase::ChangeWave(int wave)
 {
 	if (WaveSize.Num() < wave)
 	{
 		// Game Won
 		GameWon = true;
-		return;
+	} else
+	{
+		CurrentWave = wave;
+		SpawnWave(wave);
 	}
 
-	CurrentWave = wave;
-	LeftToSpawn = WaveSize[CurrentWave - 1];
+	//LeftToSpawn = WaveSize[CurrentWave - 1];
 }

@@ -26,6 +26,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void SpawnWave(int wave);
+
+	virtual void IncreaseKillCount();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		TArray<float> WaveDifficulty;
 
@@ -39,7 +43,7 @@ public:
 		float MinX;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-		float MaxX;
+		float Margins;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float MinY;
@@ -52,7 +56,10 @@ public:
 
 	/** Blueprints: we set these in our blueprint */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-		TSubclassOf<AE_Enemy> E_Enemy_BP;
+		TSubclassOf<AE_Enemy> BPE_Enemy;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		int EnemiesKilled;
 
 private:
 	int LeftToSpawn;

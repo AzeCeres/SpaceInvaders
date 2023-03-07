@@ -63,4 +63,3 @@ void AP_Bullet::DestroyBullet()
 	SetActorEnableCollision(false);
 	this->Destroy();
 }
-
