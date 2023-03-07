@@ -50,6 +50,7 @@ void AP_Bullet::Tick(float DeltaTime)
 void AP_Bullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("OnOverlap Bullet.cpp called"));
 	if (OtherActor->IsA<AE_Enemy>())
 	{
 		Cast<AE_Enemy>(OtherActor)->DestroyTarget();

@@ -112,7 +112,7 @@ void AP_PlayerController::Shoot(const FInputActionValue& input)
 
 	// Gets the local forward vector - normalized
 	FVector Direction = FRotationMatrix(Rotation).GetUnitAxis(EAxis::X);
-	GetWorld()->SpawnActor<AActor>(Bullet_BP,									// What to spawn
+	GetWorld()->SpawnActor<AActor>(BPP_Bullet3,									// What to spawn
 									GetActorLocation() + (Direction * 50.f),	// Location
 									Rotation);									// Rotation
 }

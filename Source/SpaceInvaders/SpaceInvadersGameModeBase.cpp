@@ -76,20 +76,20 @@ void ASpaceInvadersGameModeBase::IncreaseKillCount()
 	EnemiesKilled++;
 	if (EnemiesKilled > WaveSize[CurrentWave])
 	{
-		ChangeWave(CurrentWave + 1);
-		EnemiesKilled = 0;
+		ChangeWave(CurrentWave);
 	}
 }
 
 void ASpaceInvadersGameModeBase::ChangeWave(int wave)
 {
-	if (WaveSize.Num() < wave)
+	EnemiesKilled = 0;
+	if (WaveSize.Num() < CurrentWave + 1)
 	{
 		// Game Won
 		GameWon = true;
 	} else
 	{
-		CurrentWave = wave;
+		CurrentWave = wave + 1;
 		SpawnWave(wave);
 	}
 

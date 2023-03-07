@@ -41,7 +41,7 @@ public:
 
 	/** Blueprints: we set these in our blueprint */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-	TSubclassOf<AP_Bullet> Bullet_BP;
+	TSubclassOf<AP_Bullet> BPP_Bullet3;
 
 	/** Public Variables */
 

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "E_Enemy.h"
 #include "P_Bullet.generated.h"
 
 class USphereComponent;
@@ -40,7 +41,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 	float LifeSpan;
 
-	
+
+	//Blueprints
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		TSubclassOf<AE_Enemy> BPE_Enemy;
+
 
 	/** Public Functions */
 

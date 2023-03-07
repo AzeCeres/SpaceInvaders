@@ -94,7 +94,7 @@ void AE_Enemy::DestroyTarget()
 {
 	SetActorHiddenInGame(true);
 	SetActorEnableCollision(false);
-	this->Destroy();
-
 	//ASpaceInvadersGameModeBase->IncreaseKillCount();
+
+	this->Destroy();
 }
