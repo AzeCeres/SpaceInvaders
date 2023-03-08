@@ -2,6 +2,8 @@
 
 
 #include "E_Enemy.h"
+
+#include "E_Bullet.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "SpaceInvadersGameModeBase.h"
@@ -32,7 +34,7 @@ AE_Enemy::AE_Enemy()
 void AE_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	Shoot();
 }
 
 // Called every frame
@@ -102,4 +104,15 @@ void AE_Enemy::DestroyTarget()
 	ASpaceInvadersGameModeBase* mygamemode = Cast<ASpaceInvadersGameModeBase>(gameMode);
 	mygamemode->IncreaseKillCount();
 	this->Destroy();
+}
+
+void AE_Enemy::Shoot()
+{
+	FRotator Rotation = {0,0,0};
+
+	// Gets the local forward vector - normalized
+	FVector Direction = FRotationMatrix(Rotation).GetUnitAxis(EAxis::X);
+	GetWorld()->SpawnActor<AActor>(BPE_Bullet,									// What to spawn
+									GetActorLocation() + (Direction * 50.f) - FVector3d(0,0,50),	// Location
+									Rotation);									// Rotation
 }

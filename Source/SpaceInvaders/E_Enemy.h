@@ -7,7 +7,7 @@
 #include "E_Enemy.generated.h"
 
 class UBoxComponent;
-
+class AE_Bullet;
 UCLASS()
 class SPACEINVADERS_API AE_Enemy : public AActor
 {
@@ -27,6 +27,9 @@ public:
 
 	/** Components */
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	TSubclassOf<AE_Bullet> BPE_Bullet;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UBoxComponent* Collider {nullptr};
 
@@ -49,7 +52,8 @@ public:
 
 	UFUNCTION()
 	void DestroyTarget();
-
+	UFUNCTION()
+	void Shoot();
 
 	/** Public Variables */
 
