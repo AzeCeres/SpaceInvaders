@@ -66,12 +66,12 @@ void AP_PlayerController::Tick(float DeltaTime)
 	SetActorLocation(GetActorLocation() + (Direction * horzInputValue * MovementSpeed * DeltaTime));
 	if(GetActorLocation().Y >= 440)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("is outside boundaries +"));
+		//GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("is outside boundaries +"));
 		SetActorLocation(FVector(GetActorLocation().X, 440, GetActorLocation().Z));
 	}
 	else if (GetActorLocation().Y <= -440)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("is outside boundaries -"));
+		//GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("is outside boundaries -"));
 		SetActorLocation(FVector(GetActorLocation().X, -440, GetActorLocation().Z));
 	}
 	SetActorRotation(Rotation);
@@ -100,9 +100,9 @@ void AP_PlayerController::Horizontal(const FInputActionValue& input)
 
 void AP_PlayerController::Shoot(const FInputActionValue& input)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("Shoot, before tests"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("Shoot, before tests"));
 	if (!canShoot || Controller == nullptr) return;
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("Shoot, after tests"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("Shoot, after tests"));
 	timeBeforeCanShoot = shootBufferTime;
 	canShoot=false;
 	

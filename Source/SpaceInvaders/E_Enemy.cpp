@@ -3,6 +3,9 @@
 
 #include "E_Enemy.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "SpaceInvadersGameModeBase.h"
+
 #include "P_PlayerController.h"
 
 // Sets default values
@@ -94,7 +97,9 @@ void AE_Enemy::DestroyTarget()
 {
 	SetActorHiddenInGame(true);
 	SetActorEnableCollision(false);
-	//ASpaceInvadersGameModeBase->IncreaseKillCount();
 
+	AGameModeBase* gameMode = UGameplayStatics::GetGameMode(GetWorld());
+	ASpaceInvadersGameModeBase* mygamemode = Cast<ASpaceInvadersGameModeBase>(gameMode);
+	mygamemode->IncreaseKillCount();
 	this->Destroy();
 }

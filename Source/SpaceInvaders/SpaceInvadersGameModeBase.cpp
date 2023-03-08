@@ -41,6 +41,8 @@ void ASpaceInvadersGameModeBase::BeginPlay()
 
 void ASpaceInvadersGameModeBase::SpawnWave(int wave)
 {
+	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Wave Spawned" + WaveSize[CurrentWave]));
+
 	for (int row = 0; row < WaveSize[CurrentWave] / 5; row++) {
 		int xpos = MinX + 100 * row;
 		for (int collumn = 0; collumn < 5; collumn++) {
@@ -74,22 +76,32 @@ void ASpaceInvadersGameModeBase::Tick(float DeltaTime)
 void ASpaceInvadersGameModeBase::IncreaseKillCount()
 {
 	EnemiesKilled++;
-	if (EnemiesKilled > WaveSize[CurrentWave])
+	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Killcount updated: " + EnemiesKilled));
+
+	if (EnemiesKilled >= WaveSize[CurrentWave])
 	{
 		ChangeWave(CurrentWave);
+		GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Wave Change called 1" + CurrentWave));
 	}
 }
 
 void ASpaceInvadersGameModeBase::ChangeWave(int wave)
 {
 	EnemiesKilled = 0;
+	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Killcount updated: " + EnemiesKilled));
+	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Wave Change called 2" + CurrentWave));
+
+
 	if (WaveSize.Num() < CurrentWave + 1)
 	{
 		// Game Won
+		GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Game Won"));
+
 		GameWon = true;
 	} else
 	{
 		CurrentWave = wave + 1;
+		GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Changed Wave" + CurrentWave));
 		SpawnWave(wave);
 	}
 

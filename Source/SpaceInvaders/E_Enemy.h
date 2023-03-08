@@ -61,4 +61,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 	float XKillPosition = -10;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+
+		//class ASpaceInvadersGameModeBase* TempGameModeBase_BP2;
+		//ASpaceInvadersGameModeBase* TempGameModeBase_BP2 = GetWorld()->GetAuthGameMode<ASpaceInvadersGameModeBase>();
 };
