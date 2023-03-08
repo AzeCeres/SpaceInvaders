@@ -34,7 +34,7 @@ void ASpaceInvadersGameModeBase::BeginPlay()
 	Super::BeginPlay();
 
 	CurrentWave = 0;
-	LeftToSpawn = WaveSize[CurrentWave];
+	GameOverBool = false;
 
 	SpawnWave(CurrentWave);
 }
@@ -55,6 +55,11 @@ void ASpaceInvadersGameModeBase::SpawnWave(int wave)
 			AE_Enemy* Target = Cast<AE_Enemy>(Actor);
 		}
 	}
+}
+
+void ASpaceInvadersGameModeBase::GameOver()
+{
+	GameOverBool = true;
 }
 
 void ASpaceInvadersGameModeBase::Tick(float DeltaTime)
@@ -92,16 +97,20 @@ void ASpaceInvadersGameModeBase::ChangeWave(int wave)
 	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Wave Change called 2" + CurrentWave));
 
 
-	if (WaveSize.Num() < CurrentWave + 1)
+	if (CurrentWave+1 == 3) // if (WaveSize.sum <= CurrentWave + 1)
 	{
 		// Game Won
-		GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Game Won"));
+		UE_LOG(LogTemp, Warning, TEXT("Game Win"));
 
 		GameWon = true;
+	}
+	else if (GameOverBool == true)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Game Over"));
 	} else
 	{
 		CurrentWave = wave + 1;
-		GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Changed Wave" + CurrentWave));
+		GEngine->AddOnScreenDebugMessage(1, .2f, FColor::White, TEXT("Changed Wave" + CurrentWave));
 		SpawnWave(wave);
 	}
 

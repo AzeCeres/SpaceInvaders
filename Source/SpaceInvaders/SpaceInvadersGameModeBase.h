@@ -28,6 +28,8 @@ public:
 
 	virtual void SpawnWave(int wave);
 
+	virtual void GameOver();
+
 	virtual void IncreaseKillCount();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
@@ -54,12 +56,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		int CurrentWave;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		int EnemiesKilled;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		bool GameOverBool;
+
 	/** Blueprints: we set these in our blueprint */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		TSubclassOf<AE_Enemy> BPE_Enemy;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-		int EnemiesKilled;
 
 private:
 	int LeftToSpawn;
