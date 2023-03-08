@@ -92,16 +92,16 @@ void ASpaceInvadersGameModeBase::ChangeWave(int wave)
 	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Wave Change called 2" + CurrentWave));
 
 
-	if (WaveSize.Num() < CurrentWave + 1)
+	if (CurrentWave+1 == 3)
 	{
 		// Game Won
-		GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Game Won"));
+		UE_LOG(LogTemp, Warning, TEXT("Game Win"));
 
 		GameWon = true;
 	} else
 	{
 		CurrentWave = wave + 1;
-		GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Changed Wave" + CurrentWave));
+		GEngine->AddOnScreenDebugMessage(1, .2f, FColor::White, TEXT("Changed Wave" + CurrentWave));
 		SpawnWave(wave);
 	}
 
