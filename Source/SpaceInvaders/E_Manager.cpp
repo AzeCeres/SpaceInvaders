@@ -71,6 +71,10 @@ void AE_Manager::SpawnWave(int wave)
 			Target->key = keyCount;
 			
 			Enemies.Add(keyCount, Target);
+			if (Enemies.Find(keyCount) == nullptr)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Red, TEXT("THIS KEY IS A NULLPTR  " + keyCount));
+			}
 			keyCount++;
 		}
 	}
@@ -114,6 +118,7 @@ void AE_Manager::Shoot()
 	//int enemyToShoot = FMath::RandRange(0, WaveSize[CurrentWave]-EnemiesKilled);
 	TArray<int> keys;
 	Enemies.GenerateKeyArray(keys);
+	if (keys.Num() == 0) return;
 	int enemyToShoot = FMath::RandRange(1, keys.Num());
 	Enemies[keys[enemyToShoot-1]]->Shoot();
 	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Random enemy shooting  "+enemyToShoot));

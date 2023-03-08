@@ -24,6 +24,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 	TMap<int, AE_Enemy*> Enemies;
 	virtual void SpawnWave(int wave);
 
