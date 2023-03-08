@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "E_Enemy.generated.h"
 
+class AE_Manager;
 class UBoxComponent;
 class AE_Bullet;
 UCLASS()
@@ -29,6 +30,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 	TSubclassOf<AE_Bullet> BPE_Bullet;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	TSubclassOf<AE_Manager> BPE_Manager;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UBoxComponent* Collider {nullptr};
@@ -36,6 +40,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UStaticMeshComponent* StaticMesh;
 
+	
 	enum Direction
 	{
 		Left,
@@ -56,7 +61,7 @@ public:
 	void Shoot();
 
 	/** Public Variables */
-
+	int key;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 	float MovementSpeed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")

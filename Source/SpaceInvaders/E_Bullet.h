@@ -33,7 +33,6 @@ public:
 	UStaticMeshComponent* StaticMesh;
 
 	/** Public Variables */
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 	float MovementSpeed;
 

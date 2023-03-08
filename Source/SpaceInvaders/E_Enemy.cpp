@@ -4,9 +4,8 @@
 #include "E_Enemy.h"
 
 #include "E_Bullet.h"
+#include "E_Manager.h"
 #include "Components/BoxComponent.h"
-#include "Kismet/GameplayStatics.h"
-#include "SpaceInvadersGameModeBase.h"
 
 #include "P_PlayerController.h"
 
@@ -99,11 +98,8 @@ void AE_Enemy::DestroyTarget()
 {
 	SetActorHiddenInGame(true);
 	SetActorEnableCollision(false);
-
-	AGameModeBase* gameMode = UGameplayStatics::GetGameMode(GetWorld());
-	ASpaceInvadersGameModeBase* mygamemode = Cast<ASpaceInvadersGameModeBase>(gameMode);
-	mygamemode->IncreaseKillCount();
-	this->Destroy();
+	
+	Cast<AE_Manager>(BPE_Manager)->IncreaseKillCount(key);
 }
 
 void AE_Enemy::Shoot()

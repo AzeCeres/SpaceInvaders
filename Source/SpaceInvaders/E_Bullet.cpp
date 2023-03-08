@@ -20,7 +20,7 @@ AE_Bullet::AE_Bullet()
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->SetupAttachment(GetRootComponent());
 	StaticMesh->SetRelativeScale3D(FVector(0.2f, 0.2f, 0.2f));
-
+	
 	MovementSpeed = 2000.f;
 	TimeLived = 0.f;
 	LifeSpan = 10.f;
