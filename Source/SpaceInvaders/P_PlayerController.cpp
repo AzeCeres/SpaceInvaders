@@ -5,6 +5,9 @@
 #include "Camera/CameraComponent.h"
 #include "P_Bullet.h"
 
+#include "Kismet/GameplayStatics.h"
+#include "SpaceInvadersGameModeBase.h"
+
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputTriggers.h"
@@ -121,7 +124,9 @@ void AP_PlayerController::HitByTarget()
 	Lives--;
 	if (Lives <= 0)
 	{
-		// TODO GAME OVER
+		AGameModeBase* gameMode = UGameplayStatics::GetGameMode(GetWorld());
+		ASpaceInvadersGameModeBase* mygamemode = Cast<ASpaceInvadersGameModeBase>(gameMode);
+		mygamemode->GameOver();
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
 		
