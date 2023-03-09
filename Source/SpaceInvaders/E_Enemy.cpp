@@ -4,6 +4,7 @@
 #include "E_Enemy.h"
 
 #include "E_Bullet.h"
+#include "MathUtil.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "SpaceInvadersGameModeBase.h"
@@ -34,15 +35,24 @@ AE_Enemy::AE_Enemy()
 void AE_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
-	Shoot();
+	TimeBeforeShoot = FMath::FRandRange(3, 7);
 }
 
 // Called every frame
 void AE_Enemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	TimeBeforeShoot-=DeltaTime;
+	if (TimeBeforeShoot <=0)
+	{
+		Shoot();
+		TimeBeforeShoot = FMath::FRandRange(3, 7);
+	}
 	if (GetActorLocation().X < XKillPosition)
 	{
+		AGameModeBase* gameMode = UGameplayStatics::GetGameMode(GetWorld());
+		ASpaceInvadersGameModeBase* mygamemode = Cast<ASpaceInvadersGameModeBase>(gameMode);
+		mygamemode->GameOver();
 		DestroyTarget();
 	}
 	FVector NewLocation = GetActorLocation();
