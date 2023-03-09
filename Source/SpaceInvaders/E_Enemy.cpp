@@ -36,6 +36,7 @@ void AE_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
 	TimeBeforeShoot = FMath::FRandRange(3, 7);
+	
 }
 
 // Called every frame
@@ -45,11 +46,14 @@ void AE_Enemy::Tick(float DeltaTime)
 	TimeBeforeShoot-=DeltaTime;
 	if (TimeBeforeShoot <=0)
 	{
+		AGameModeBase* gameMode = UGameplayStatics::GetGameMode(GetWorld());
+		ASpaceInvadersGameModeBase* mygamemode = Cast<ASpaceInvadersGameModeBase>(gameMode);
 		Shoot();
-		TimeBeforeShoot = FMath::FRandRange(3, 7);
+		TimeBeforeShoot = FMath::RandRange(3, 7)-((mygamemode->EnemiesKilled*0.3f)-mygamemode->WaveDifficulty[mygamemode->CurrentWave]);
 	}
 	if (GetActorLocation().X < XKillPosition)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Red, TEXT("ENEMY PASSED, GAME OVER"));
 		AGameModeBase* gameMode = UGameplayStatics::GetGameMode(GetWorld());
 		ASpaceInvadersGameModeBase* mygamemode = Cast<ASpaceInvadersGameModeBase>(gameMode);
 		mygamemode->GameOver();
