@@ -92,12 +92,13 @@ void ASpaceInvadersGameModeBase::IncreaseKillCount()
 
 void ASpaceInvadersGameModeBase::ChangeWave(int wave)
 {
+	CurrentWave = wave + 1;
 	EnemiesKilled = 0;
 	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Killcount updated: " + EnemiesKilled));
 	GEngine->AddOnScreenDebugMessage(-1, .2f, FColor::White, TEXT("Wave Change called 2" + CurrentWave));
 
 
-	if (CurrentWave+1 == 3) // if (WaveSize.sum <= CurrentWave + 1)
+	if (CurrentWave == 3) // if (WaveSize.sum <= CurrentWave + 1)
 	{
 		// Game Won
 		UE_LOG(LogTemp, Warning, TEXT("Game Win"));
@@ -109,7 +110,7 @@ void ASpaceInvadersGameModeBase::ChangeWave(int wave)
 		UE_LOG(LogTemp, Warning, TEXT("Game Over"));
 	} else
 	{
-		CurrentWave = wave + 1;
+		
 		GEngine->AddOnScreenDebugMessage(1, .2f, FColor::White, TEXT("Changed Wave" + CurrentWave));
 		SpawnWave(wave);
 	}
